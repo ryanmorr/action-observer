@@ -12,12 +12,11 @@
      * 
      * @param {String} key
      * @param {Function} fn
-     * @param {Object} ctx
      */
-    ActionObserver.bind = function(key, fn, ctx){
+    ActionObserver.bind = function(key, fn){
         listeners[key] = {
             triggered: false,
-            fn: fn.bind(ctx || win)
+            fn: fn
         };
     };
 
@@ -76,7 +75,7 @@
             // If a callback exists, invoke the function passing 
             // the element and event object
             if(fn){
-                fn(e, el);
+                fn.call(el, e, el);
             }
         }
     }
