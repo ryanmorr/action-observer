@@ -54,7 +54,7 @@
     
     // Handle action events (click, submit) on the document
     function onEvent(e){
-        var el = find(e.target), key, exists, fn;
+        var el = find(e.target), key, fn;
         if(el){
             // If the element is a form and it is not a submit 
             // event, return
@@ -64,16 +64,15 @@
             // Get the value of the data-observe attribute used 
             // to find the callback function
             key = el.getAttribute('data-observe');
-            exists = has.call(listeners, key);
-            if(!exists){
-                // Mark the element as triggered
-                listeners[key] = {
-                    tiggered: true
-                };
+            // Create map if it doesn't exist
+            if(!has.call(listeners, key)){
+                listeners[key] = {};
             }
-            fn = listeners[key].fn;
+            // Mark the element as triggered
+            listeners[key].triggered = true;
             // If a callback exists, invoke the function passing 
             // the element and event object
+            fn = listeners[key].fn;
             if(fn){
                 fn.call(el, e, el);
             }
