@@ -1,10 +1,12 @@
 # ActionObserver
 
-Solution for capturing user triggered action events (click, submit) pre-initialization as they bubble up to the document element. Allows the event to be handled immediately or queued for processing once the page has finished initializing while still acknowledging the user’s actions. Please refer to [http://www.ryanmorr.com/maintain-responsiveness-by-capturing-unbound-action-events](http://www.ryanmorr.com/maintain-responsiveness-by-capturing-unbound-action-events) to read more.
+Solution for capturing user triggered action events (click, submit) pre-initialization as they bubble up to the document element. Allows the event to be handled immediately or queued for processing once the page has finished initializing. Please refer to the [blog post](http://www.ryanmorr.com/maintain-responsiveness-by-capturing-unbound-action-events) to read more.
 
 ## Usage
 
-To start, add a `data-observe` attribute to any element you wish to observe events on:
+To start, you'll want to add the script in the head of the HTML. This is important because it must be loaded *before* the DOM has started to load and scripts have begun executing so that action events can be captured pre-initialization. You may also want to consider adding the script lnline to avoid the extra HTTP request.
+
+Next, add a `data-observe` attribute to any element you wish to observe events on:
 
 ```html
 <!--Observe click events-->
@@ -17,29 +19,75 @@ To start, add a `data-observe` attribute to any element you wish to observe even
 </form>
 ```
 
-Adding the `data-observe` attribute to a form will automatically observe and capture submit events for that form. You are not required to add the `data-observe` attribute to the submit button of a form. Any other type of element will observe and capture click events.
+Adding the `data-observe` attribute to a form will automatically observe submit events for that form. Otherwise, click events will be observed for any other type of element. The value of the `data-observe` is used as the reference to that element in JavaScript.
 
-The value of the `data-observe` attribute is the reference point in JavaScript to that element. The `ActionObserver.bind` method is used to attach a callback function that will be invoked when an action event is dispatched from the source element, passing the event object and the element as arguments:
+From here, there are two different ways to approach implementation. The first option is to bind a callback function to be executed as soon as an action event is dispatched from the target element, allowing you to handle the request immediately:
 
 ```javascript
 ActionObserver.bind('add', function(event, element){
     // do something                    
 });
+```
 
-ActionObserver.bind('search', function(event, element){
+The other option is to check if an action event was dispatched on a target element once your scripts have completed initializing to address the request afterwards:
+
+```javascript
+if(ActionObserver.isTriggered('add')){
+    // do something                    
+}
+```
+
+The best approach depends on your specific use case.
+
+## API
+
+##### ActionObserver.bind(key, fn)
+
+Bind a callback to a target element to be executed as soon as an event is dispatched from that element using the key reference (value of `data-observe` attribute) and a callback function as the first and second arguments. The callback passes the event object and the target element as the only parameters. Only one callback per target element is permitted.
+
+```javascript
+// Create a callback function
+ActionObserver.bind('link', function(event, element){
     // do something                    
 });
 ```
 
-Invoking the `ActionObserver.unbind` method with the value of a `data-observe` attribute will remove the associated callback function.  Once you have established all your callback methods, invoke the `ActionObserver.enable` method to start listening for events. To stop listening for events, invoke the `ActionObserver.disable` method.
+##### ActionObserver.unbind(key)
 
-## Tests
+Remove a callback function using the key reference (value of `data-observe` attribute).
 
-Included is a test file that demonstrates how both click events and form submissions are captured by ActionObserver. Open `test.html` in your browser to view. See a working example at [http://ryanmorr.com/demos/action-observer/](http://ryanmorr.com/demos/action-observer/).
+```javascript
+// Remove a callback function
+ActionObserver.unbind('link');
+```
+
+##### ActionObserver.isTriggered()
+
+Was an action event triggered on the target element using the key reference (value of `data-observe` attribute).
+
+```javascript
+// Did the user click the link
+var triggered = ActionObserver.isTriggered('link');
+```
+
+##### ActionObserver.disable()
+
+Removes event listeners from the document element and disables all the functionality. This cannot be undone.
+
+```javascript
+// Disable functionality
+ActionObserver.disable();
+```
 
 ## Browser Support
 
-Chrome, Firefox, Opera, Safari, Internet Explorer 9+
+* Chrome *
+* Firefox *
+* Opera *
+* Safari *
+* Internet Explorer 9+
+* Android *
+* iOS *
 
 ## License
 
