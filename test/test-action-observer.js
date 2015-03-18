@@ -53,16 +53,12 @@ describe('ActionObserver', function(){
     });
 
     it('should allow to be disabled', function(){
-        var spy = sinon.spy(function(e){
-            e.preventDefault();
-        });
+        var spy = sinon.spy();
         ActionObserver.bind('link', spy);
+        ActionObserver.disable();
         var link = document.getElementById('link');
         triggerEvent(link, 'click');
-        expect(spy.calledOnce).to.equal(true);
-        ActionObserver.disable();
-        triggerEvent(link, 'click');
-        expect(spy.calledOnce).to.equal(true);
+        expect(spy.called).to.equal(false);
     });
 
 });
