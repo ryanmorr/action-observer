@@ -1,0 +1,34 @@
+{
+  "name": "action-observer",
+  "version": "1.1.0",
+  "description": "Maintain responsiveness by capturing unbound action events pre-initialization",
+  "license": "UNLICENSE",
+  "homepage": "https://github.com/ryanmorr/action-observer",
+  "main": "dist/action-observer.js",
+  "author": {
+    "name": "Ryan Morr",
+    "email": "rm.morr@gmail.com",
+    "url": "http://ryanmorr.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ryanmorr/action-observer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ryanmorr/action-observer/issues"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-uglify": "^1.2.0",
+    "gulp-jshint": "^1.10.0",
+    "jshint-stylish": "^1.0.2",
+    "gulp-plumber": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-header": "^1.2.2",
+    "gulp-clean": "^0.3.1",
+    "mocha": "^2.2.4",
+    "chai": "^2.3.0",
+    "sinon": "^1.14.1",
+    "gulp-mocha-phantomjs": "^0.6.1"
+  }
+}
