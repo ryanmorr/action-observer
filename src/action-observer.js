@@ -99,7 +99,15 @@
     docElement.addEventListener('click', onEvent, false);
     docElement.addEventListener('submit', onEvent, false);
 
-    // Expose `ActionObserver`
-    win.ActionObserver = ActionObserver;
+    /**
+     * Expose 'ActionObserver'
+     */
+    if(typeof module !== 'undefined' && module.exports){
+        module.exports = ActionObserver;
+    }else if(typeof define === 'function' && define.amd){
+        define(function(){ return ActionObserver; });
+    }else{
+        win['ActionObserver'] = ActionObserver;
+    }
     
 })(this);
