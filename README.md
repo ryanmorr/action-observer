@@ -1,4 +1,4 @@
-# ActionObserver
+# ActionObserver [![Build Status](https://travis-ci.org/ryanmorr/action-observer.svg)](https://travis-ci.org/ryanmorr/action-observer)
 
 Solution for capturing user triggered action events (click, submit) pre-initialization as they bubble up to the document element. Allows the event to be handled immediately or queued for processing once the page has finished initializing. Designed for JavaScript heavy pages, such as single page web applications. Please refer to the [blog post](http://www.ryanmorr.com/maintain-responsiveness-by-capturing-unbound-action-events) to read more.
 
