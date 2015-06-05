@@ -75,9 +75,11 @@ ActionObserver.disable();
 
 ## Installation
 
-ActionObserver is [CommonJS](http://www.commonjs.org/) and [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compatible with no dependencies. You can download the [development](http://github.com/ryanmorr/action-observer/raw/master/dist/action-observer.js) or [minified](http://github.com/ryanmorr/action-observer/raw/master/dist/action-observer.min.js) version, or install it using Bower:
+ActionObserver is [CommonJS](http://www.commonjs.org/) and [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compatible with no dependencies. You can download the [development](http://github.com/ryanmorr/action-observer/raw/master/dist/action-observer.js) or [minified](http://github.com/ryanmorr/action-observer/raw/master/dist/action-observer.min.js) version, or install it in one of the following ways:
 
 ``` sh
+npm install git+https://git@github.com/ryanmorr/action-observer.git
+
 bower install ryanmorr/action-observer
 ```
 
