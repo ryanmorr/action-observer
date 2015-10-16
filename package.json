@@ -2,7 +2,7 @@
   "name": "action-observer",
   "version": "1.1.0",
   "description": "Maintain responsiveness by capturing unbound action events pre-initialization",
-  "license": "UNLICENSE",
+  "license": "Unlicense",
   "homepage": "https://github.com/ryanmorr/action-observer",
   "main": "dist/action-observer.js",
   "author": {
