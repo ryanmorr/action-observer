@@ -1,10 +1,10 @@
-var gulp    = require('gulp'),
+var del     = require('del'),
+    gulp    = require('gulp'),
     uglify  = require('gulp-uglify'),
     jshint  = require('gulp-jshint'),
     header  = require('gulp-header'),
     plumber = require('gulp-plumber'),
     rename  = require('gulp-rename'),
-    clean   = require('gulp-clean'),
     mocha   = require('gulp-mocha-phantomjs'),
     package = require('./package.json');
 
@@ -41,9 +41,7 @@ gulp.task('build', ['clean'], function(){
 });
 
 gulp.task('clean', function(){
-    return gulp.src(paths.output, {read: false})
-        .pipe(plumber())
-        .pipe(clean());
+    return del(paths.output);
 });
 
 gulp.task('lint', function(){
