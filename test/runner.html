@@ -7,19 +7,18 @@
 </head>
 <body>
 	<div id="mocha"></div>
-	<a id="link" href="#" data-observe="link"></a>
-	<form id="form" method="GET" action="#" data-observe="form"></form>
+	<a id="link" href="#" data-ao="link"></a>
+	<form id="form" method="GET" action="#" data-ao="form"></form>
 	<script src="../node_modules/mocha/mocha.js"></script>
 	<script src="../node_modules/chai/chai.js"></script>
     <script src="../node_modules/sinon/pkg/sinon.js"></script>
 	<script>mocha.setup('bdd');</script>
-	<script src="../src/action-observer.js"></script>
-	<script src="test.action-observer.js"></script>
+	<script src="tests.js"></script>
 	<script>
 	mocha.checkLeaks();
-    if(window.mochaPhantomJS){
+    if (window.mochaPhantomJS) {
         mochaPhantomJS.run();
-    }else{
+    } else {
         mocha.run();
     }
 	</script>
