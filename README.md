@@ -1,37 +1,41 @@
-# ActionObserver [![Build Status](https://travis-ci.org/ryanmorr/action-observer.svg)](https://travis-ci.org/ryanmorr/action-observer)
+# Action Observer
 
-Solution for capturing user triggered action events (click, submit) pre-initialization as they bubble up to the document element. Allows the event to be handled immediately or queued for processing once the page has finished initializing. Designed for JavaScript heavy pages, such as single page web applications. Please refer to the [blog post](http://www.ryanmorr.com/maintain-responsiveness-by-capturing-unbound-action-events) to read more.
+[![GitHub version](https://badge.fury.io/gh/ryanmorr%2Faction-observer.svg)](https://badge.fury.io/gh/ryanmorr%2Faction-observer) [![Build Status](https://travis-ci.org/ryanmorr/action-observer.svg)](https://travis-ci.org/ryanmorr/action-observer) ![Size](https://badge-size.herokuapp.com/ryanmorr/action-observer/master/dist/ao.min.js.svg?color=blue&label=file%20size)
+
+> Declarative event handling to capture unbound action events
+
+Action Observer is a solution for capturing user triggered action events (click, submit) as they bubble up to the document element. This is most useful as a means of maintaining responsiveness pre-initialization of JavaScript heavy apps, allowing action events to be handled immediately or queued for processing once the page has finished initializing.Please refer to the [blog post](http://www.ryanmorr.com/maintain-responsiveness-by-capturing-unbound-action-events) to read more.
 
 ## Usage
 
-Add a `data-observe` attribute to any element you wish to observe events on:
+Add a `data-ao` attribute to any element you wish to observe events on:
 
 ```html
-<!--Observe click events-->
-<a href="#" data-observe="add">Add Item</a>
+<!-- Observe click events -->
+<a href="#" data-ao="add">Add Item</a>
 
-<!--Observe submit events-->
-<form method="GET" action="#" data-observe="search">
+<!-- Observe submit events -->
+<form method="GET" action="#" data-ao="search">
     <input type="search" name="search" />
     <button type="submit">Submit</button>
 </form>
 ```
 
-Adding the `data-observe` attribute to a form will automatically observe submit events for that form. Otherwise, click events will be observed for any other type of element. The value of the `data-observe` attribute is used as the reference to that element in JavaScript.
+Adding the `data-ao` attribute to a form will automatically observe submit events for that form. Otherwise, click events will be observed for any other type of element. The value of the `data-ao` attribute is used as the reference to that element in JavaScript.
 
 There are two different ways to approach implementation. The first option is to bind a callback function to be executed as soon as an action event is dispatched from the target element, allowing you to handle the request immediately:
 
 ```javascript
-ActionObserver.bind('add', function(event, element){
-    // do something                    
+ao.observe('add', (event, element) => {
+    // Handle the request immediately                  
 });
 ```
 
 The other option is to check if an action event was dispatched on a target element once your scripts have completed initializing to address the request afterwards:
 
 ```javascript
-if(ActionObserver.isTriggered('add')){
-    // do something                    
+if (ao.wasTriggered('add')) {
+    // Handle the request after the fact (better late than never)                  
 }
 ```
 
@@ -39,61 +43,61 @@ The optimal approach will depend on your specific use case.
 
 ## API
 
-##### ActionObserver#bind(key, fn)
+### ao.observe(key, fn)
 
-Bind a callback to a target element to be executed as soon as an event is dispatched from that element using the reference key (value of `data-observe` attribute) and a callback function as the first and second arguments. The callback passes the event object and the target element as the only parameters. Only one callback per target element is permitted.
+Bind a callback to a target element to be executed as soon as an event is dispatched from that element using the reference key (value of `data-ao` attribute) and a callback function as the first and second arguments. The callback is passed the event object and the target element as the only two parameters.
 
 ```javascript
-ActionObserver.bind('link', function(event, element){
-    // do something                    
+// Acknowledge the request
+ao.observe('link', (event, element) => {
+    loadingIndicator.show();
 });
 ```
 
-##### ActionObserver#unbind(key)
+### ao.unobserve(key)
 
-Remove a callback function using the reference key (value of `data-observe` attribute).
+Remove a callback function from the target element using the reference key (value of `data-ao` attribute).
 
 ```javascript
-ActionObserver.unbind('link');
+// Once the app code has initialized the link, stop observing
+if (link.isInitialized()) {
+    ao.unobserve('link');
+}
 ```
 
-##### ActionObserver#isTriggered(key)
+### ao.wasTriggered(key)
 
-Determine if an action event was triggered on the target element using the reference key (value of `data-observe` attribute).
+Determine if an action event was triggered on the target element using the reference key (value of `data-ao` attribute).
 
 ```javascript
-ActionObserver.isTriggered('link');
+// Check to see if an action event was triggered on the link
+if (ao.wasTriggered('link')) {
+    link.trigger();
+}
 ```
 
-##### ActionObserver#disable()
+### ao.disable()
 
-Removes event listeners from the document element and disables all the functionality. This cannot be undone.
+Remove event listeners from the document element and disables all the functionality. This cannot be undone.
 
 ```javascript
-ActionObserver.disable();
+// Once all initializing code is complete, disable all functionality
+if (app.isLoaded()){
+    ao.disable();
+}
 ```
 
 ## Installation
 
-ActionObserver is [CommonJS](http://www.commonjs.org/) and [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compatible with no dependencies. You can download the [development](http://github.com/ryanmorr/action-observer/raw/master/dist/action-observer.js) or [minified](http://github.com/ryanmorr/action-observer/raw/master/dist/action-observer.min.js) version, or install it in one of the following ways:
+Action Observer is [CommonJS](http://www.commonjs.org/) and [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compatible with no dependencies. You can download the [development](http://github.com/ryanmorr/action-observer/raw/master/dist/ao.js) or [minified](http://github.com/ryanmorr/action-observer/raw/master/dist/ao.min.js) version, or install it in one of the following ways:
 
 ``` sh
-npm install git+https://git@github.com/ryanmorr/action-observer.git
+npm install ryanmorr/action-observer
 
 bower install ryanmorr/action-observer
 ```
 
 You'll want to add the script in the `<head>` of your HTML. This is important because it must be loaded *before* the DOM has started to load and scripts have begun executing so that action events can be captured pre-initialization. You may also want to consider adding the script lnline to avoid the extra HTTP request.
-
-## Browser Support
-
-* Chrome *
-* Firefox *
-* Opera *
-* Safari *
-* Internet Explorer 9+
-* Android *
-* iOS *
 
 ## Tests
 
