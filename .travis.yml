@@ -3,5 +3,5 @@ node_js:
   - "5.1"
 before_script:
   - npm install -g gulp
-script: 
-  - gulp
+script:
+  - gulp lint test
