@@ -1,6 +1,10 @@
 # Action Observer
 
-[![GitHub version](https://badge.fury.io/gh/ryanmorr%2Faction-observer.svg)](https://badge.fury.io/gh/ryanmorr%2Faction-observer) [![Build Status](https://travis-ci.org/ryanmorr/action-observer.svg)](https://travis-ci.org/ryanmorr/action-observer) ![Size](https://badge-size.herokuapp.com/ryanmorr/action-observer/master/dist/ao.min.js.svg?color=blue&label=file%20size)
+[![Version Badge][version-image]][project-url]
+[![Build Status][build-image]][build-url]
+[![Dependencies][dependencies-image]][project-url]
+[![License][license-image]][license-url]
+[![File Size][file-size-image]][project-url]
 
 > Declarative event handling to capture unbound action events
 
@@ -112,3 +116,12 @@ gulp test
 ## License
 
 This project is dedicated to the public domain as described by the [Unlicense](http://unlicense.org/).
+
+[project-url]: https://github.com/ryanmorr/action-observer
+[version-image]: https://badge.fury.io/gh/ryanmorr%2Faction-observer.svg
+[build-url]: https://travis-ci.org/ryanmorr/action-observer
+[build-image]: https://travis-ci.org/ryanmorr/action-observer.svg
+[dependencies-image]: https://david-dm.org/ryanmorr/action-observer.svg
+[license-image]: https://img.shields.io/badge/license-Unlicense-blue.svg
+[license-url]: UNLICENSE
+[file-size-image]: https://badge-size.herokuapp.com/ryanmorr/action-observer/master/dist/ao.min.js.svg?color=blue&label=file%20size
