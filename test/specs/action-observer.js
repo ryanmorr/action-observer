@@ -1,14 +1,15 @@
-/* eslint-disable max-len, no-unused-expressions */
-
-import { expect } from 'chai';
-import sinon from 'sinon';
-import ao, { observe, unobserve, wasTriggered, disable } from '../src/ao';
+import ao, { observe, unobserve, wasTriggered, disable } from '../../src/action-observer';
 
 function triggerEvent(el, type) {
     const event = document.createEvent('Event');
     event.initEvent(type, true, true);
     el.dispatchEvent(event);
 }
+
+document.body.innerHTML += `
+    <a id="link" href="#" data-ao="link"></a>
+    <form id="form" method="GET" action="#" data-ao="form"></form>
+`;
 
 describe('Action Observer', () => {
     it('should support importing of individual methods/properties (observe, unobserve, wasTriggered, disable)', () => {
