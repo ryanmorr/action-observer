@@ -1,21 +1,20 @@
 {
-  "name": "action-observer",
+  "name": "@ryanmorr/action-observer",
   "description": "Declarative event handling to capture unbound action events",
   "version": "2.0.0",
   "license": "Unlicense",
   "homepage": "https://github.com/ryanmorr/action-observer",
-  "main": "dist/ao.js",
-  "author": {
-    "name": "Ryan Morr",
-    "email": "rm.morr@gmail.com",
-    "url": "http://ryanmorr.com"
-  },
+  "main": "dist/action-observer.min.js",
+  "author": "Ryan Morr",
   "repository": {
     "type": "git",
     "url": "git://github.com/ryanmorr/action-observer.git"
   },
   "bugs": {
     "url": "https://github.com/ryanmorr/action-observer/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",
