@@ -1,7 +1,7 @@
 {
   "name": "@ryanmorr/action-observer",
   "description": "Declarative event handling to capture unbound action events",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "license": "Unlicense",
   "homepage": "https://github.com/ryanmorr/action-observer",
   "main": "dist/action-observer.min.js",
