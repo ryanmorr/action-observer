@@ -118,9 +118,3 @@ export function disable() {
  */
 docElement.addEventListener('click', onEvent, false);
 docElement.addEventListener('submit', onEvent, false);
-
-/**
- * Declare and export `ao` namespace
- */
-const ao = {observe, unobserve, disable, wasTriggered};
-export default ao;

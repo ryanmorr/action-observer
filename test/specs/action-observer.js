@@ -1,4 +1,4 @@
-import ao, { observe, unobserve, wasTriggered, disable } from '../../src/action-observer';
+import { observe, unobserve, wasTriggered, disable } from '../../src/action-observer';
 
 function triggerEvent(el, type) {
     const event = document.createEvent('Event');
@@ -12,24 +12,6 @@ document.body.innerHTML += `
 `;
 
 describe('Action Observer', () => {
-    it('should support importing of individual methods/properties (observe, unobserve, wasTriggered, disable)', () => {
-        expect(observe).to.be.a('function');
-        expect(unobserve).to.be.a('function');
-        expect(wasTriggered).to.be.a('function');
-        expect(disable).to.be.a('function');
-    });
-
-    it('should support importing of ao namespace', () => {
-        expect(ao.observe).to.be.a('function');
-        expect(ao.unobserve).to.be.a('function');
-        expect(ao.wasTriggered).to.be.a('function');
-        expect(ao.disable).to.be.a('function');
-        expect(ao.observe).to.equal(observe);
-        expect(ao.unobserve).to.equal(unobserve);
-        expect(ao.wasTriggered).to.equal(wasTriggered);
-        expect(ao.disable).to.equal(disable);
-    });
-
     it('should capture click events', () => {
         const spy = sinon.spy((e) => {
             e.preventDefault();
