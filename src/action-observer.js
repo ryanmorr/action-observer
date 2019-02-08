@@ -12,12 +12,12 @@ const listeners = Object.create(null);
  * @api private
  */
 function onEvent(evt) {
-    const el = evt.target.closest('[data-ao]');
+    const el = evt.target.closest('[action-observe]');
     if (el) {
         if (el.nodeName.toLowerCase() === 'form' && evt.type !== 'submit') {
             return;
         }
-        const key = el.getAttribute('data-ao');
+        const key = el.getAttribute('action-observe');
         if (!(key in listeners)) {
             listeners[key] = {};
         }

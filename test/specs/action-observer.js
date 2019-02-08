@@ -1,8 +1,8 @@
 import { observe, unobserve, wasTriggered, disable } from '../../src/action-observer';
 
 document.body.innerHTML += `
-    <a id="link" href="#" data-ao="link"></a>
-    <form id="form" method="GET" action="#" data-ao="form"></form>
+    <a id="link" href="#" action-observe="link"></a>
+    <form id="form" method="GET" action="#" action-observe="form"></form>
 `;
 
 describe('action-observer', () => {
