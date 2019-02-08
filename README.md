@@ -10,36 +10,39 @@ Action observer is a solution for capturing user triggered action events (click,
 
 ## Install
 
-Download the [development](http://github.com/ryanmorr/action-observer/raw/master/dist/ao.js) or [minified](http://github.com/ryanmorr/action-observer/raw/master/dist/ao.min.js) version, or install via NPM:
+Download the [development](http://github.com/ryanmorr/action-observer/raw/master/dist/action-observer.js) or [minified](http://github.com/ryanmorr/action-observer/raw/master/dist/action-observer.min.js) version, or install via NPM:
 
 ``` sh
 npm install @ryanmorr/action-observer
 ```
 
-You'll want to add the script to the `<head>` of your HTML. This is important because it must be loaded *before* the DOM has started to load and scripts have begun executing so that action events can be captured pre-initialization. You may also want to consider adding the script lnline to avoid the extra HTTP request.
+## Configuration
 
-## Usage
+You'll want to add the script to the `<head>` of your HTML. This is important because it must be loaded *before* the DOM has started to load and scripts have begun executing so that action events can be captured pre-initialization.
 
-Add a `data-ao` attribute to any element you wish to observe events on:
+To start, add a `action-observe` attribute to any element you wish to observe events on:
 
 ```html
 <!-- Observe click events -->
-<a href="#" data-ao="add">Add Item</a>
+<a href="#" action-observe="add">Add Item</a>
 
 <!-- Observe submit events -->
-<form method="GET" action="#" data-ao="search">
+<form method="GET" action="#" action-observe="search">
     <input type="search" name="search" />
     <button type="submit">Submit</button>
 </form>
 ```
 
-Adding the `data-ao` attribute to a form will automatically observe submit events for that form. Otherwise, click events will be observed for any other type of element. The value of the `data-ao` attribute is used as the reference to that element in JavaScript.
+Adding the `action-observe` attribute to a form will automatically observe submit events for that form. Otherwise, click events will be observed for any other type of element. The value of the `action-observe` attribute is used as the reference to that element in the JavaScript API for action-observer.
+
+## Usage
 
 There are two different ways to approach implementation. The first option is to bind a callback function to be executed as soon as an action event is dispatched from the target element, allowing you to handle the request immediately:
 
 ```javascript
 import { observe } from '@ryanmorr/action-observer';
 
+// Observes the element with the action-observe="add" attribute
 observe('add', (event, element) => {
     // Handle the request immediately                  
 });
@@ -50,56 +53,25 @@ The other option is to check if an action event was dispatched on a target eleme
 ```javascript
 import { wasTriggered } from '@ryanmorr/action-observer';
 
+// Checks the element with the action-observe="add" attribute
 if (wasTriggered('add')) {
     // Handle the request after the fact (better late than never)                  
 }
 ```
 
-The optimal approach will depend on your specific use case.
-
-## API
-
-### ao.observe(key, fn)
-
-Bind a callback to a target element to be executed as soon as an event is dispatched from that element using the reference key (value of `data-ao` attribute) and a callback function as the first and second arguments. The callback is passed the event object and the target element as the only two parameters.
+Once your primary JavaScript has loaded, you can choose to stop observing specific elements or stop functionality entirely for all elements:
 
 ```javascript
-// Acknowledge the request
-ao.observe('link', (event, element) => {
-    loadingIndicator.show();
-});
-```
+import { unobserve, disable } from '@ryanmorr/action-observer';
 
-### ao.unobserve(key)
-
-Remove a callback function from the target element using the reference key (value of `data-ao` attribute).
-
-```javascript
-// Once the app code has initialized the link, stop observing
+// Once the application code has initialized the link, stop observing
 if (link.isInitialized()) {
-    ao.unobserve('link');
+    unobserve('link');
 }
-```
 
-### ao.wasTriggered(key)
-
-Determine if an action event was triggered on the target element using the reference key (value of `data-ao` attribute).
-
-```javascript
-// Check to see if an action event was triggered on the link
-if (ao.wasTriggered('link')) {
-    link.trigger();
-}
-```
-
-### ao.disable()
-
-Remove event listeners from the document element and disables all the functionality. This cannot be undone.
-
-```javascript
 // Once all initializing code is complete, disable all functionality
 if (app.isLoaded()){
-    ao.disable();
+    disable();
 }
 ```
 
