@@ -1,11 +1,5 @@
 import { observe, unobserve, wasTriggered, disable } from '../../src/action-observer';
 
-function triggerEvent(el, type) {
-    const event = document.createEvent('Event');
-    event.initEvent(type, true, true);
-    el.dispatchEvent(event);
-}
-
 document.body.innerHTML += `
     <a id="link" href="#" data-ao="link"></a>
     <form id="form" method="GET" action="#" data-ao="form"></form>
@@ -17,8 +11,8 @@ describe('action-observer', () => {
         const spy = sinon.spy((e) => e.preventDefault());
 
         observe('link', spy);
-        
-        triggerEvent(link, 'click');
+
+        link.dispatchEvent(new MouseEvent('click', {bubbles: true}));
 
         const spyCall = spy.getCall(0);
         expect(spy.calledOnce).to.equal(true);
@@ -33,8 +27,8 @@ describe('action-observer', () => {
         const spy = sinon.spy((e) => e.preventDefault());
 
         observe('form', spy);
-        
-        triggerEvent(form, 'submit');
+
+        form.dispatchEvent(new Event('submit', {bubbles: true}));
 
         const spyCall = spy.getCall(0);
         expect(spy.calledOnce).to.equal(true);
@@ -49,13 +43,13 @@ describe('action-observer', () => {
         const spy = sinon.spy((e) => e.preventDefault());
 
         observe('link', spy);
-        
-        triggerEvent(link, 'click');
+
+        link.dispatchEvent(new MouseEvent('click', {bubbles: true}));
         expect(spy.calledOnce).to.equal(true);
 
         unobserve('link', spy);
 
-        triggerEvent(link, 'click');
+        link.dispatchEvent(new MouseEvent('click', {bubbles: true}));
         expect(spy.calledOnce).to.equal(true);
     });
 
@@ -67,7 +61,7 @@ describe('action-observer', () => {
 
         disable();
 
-        triggerEvent(link, 'click');
+        link.dispatchEvent(new MouseEvent('click', {bubbles: true}));
         expect(spy.called).to.equal(false);
     });
 });
