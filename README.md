@@ -1,14 +1,22 @@
-# Action Observer
+# action-observer
 
 [![Version Badge][version-image]][project-url]
 [![Build Status][build-image]][build-url]
-[![Dependencies][dependencies-image]][project-url]
 [![License][license-image]][license-url]
-[![File Size][file-size-image]][project-url]
 
 > Declarative event handling to capture unbound action events
 
-Action Observer is a solution for capturing user triggered action events (click, submit) as they bubble up to the document element. This is most useful as a means of maintaining responsiveness pre-initialization of JavaScript heavy apps, allowing action events to be handled immediately or queued for processing once the page has finished initializing.Please refer to the [blog post](http://www.ryanmorr.com/maintain-responsiveness-by-capturing-unbound-action-events) to read more.
+Action observer is a solution for capturing user triggered action events (click, submit) as they bubble up to the document element. This is most useful as a means of maintaining responsiveness pre-initialization of JavaScript heavy apps, allowing action events to be handled immediately or queued for processing once the page has finished initializing. Please refer to the [blog post](http://www.ryanmorr.com/maintain-responsiveness-by-capturing-unbound-action-events) to read more.
+
+## Install
+
+Download the [development](http://github.com/ryanmorr/action-observer/raw/master/dist/ao.js) or [minified](http://github.com/ryanmorr/action-observer/raw/master/dist/ao.min.js) version, or install via NPM:
+
+``` sh
+npm install @ryanmorr/action-observer
+```
+
+You'll want to add the script to the `<head>` of your HTML. This is important because it must be loaded *before* the DOM has started to load and scripts have begun executing so that action events can be captured pre-initialization. You may also want to consider adding the script lnline to avoid the extra HTTP request.
 
 ## Usage
 
@@ -30,7 +38,9 @@ Adding the `data-ao` attribute to a form will automatically observe submit event
 There are two different ways to approach implementation. The first option is to bind a callback function to be executed as soon as an action event is dispatched from the target element, allowing you to handle the request immediately:
 
 ```javascript
-ao.observe('add', (event, element) => {
+import { observe } from '@ryanmorr/action-observer';
+
+observe('add', (event, element) => {
     // Handle the request immediately                  
 });
 ```
@@ -38,7 +48,9 @@ ao.observe('add', (event, element) => {
 The other option is to check if an action event was dispatched on a target element once your scripts have completed initializing to address the request afterwards:
 
 ```javascript
-if (ao.wasTriggered('add')) {
+import { wasTriggered } from '@ryanmorr/action-observer';
+
+if (wasTriggered('add')) {
     // Handle the request after the fact (better late than never)                  
 }
 ```
@@ -91,28 +103,6 @@ if (app.isLoaded()){
 }
 ```
 
-## Installation
-
-Action Observer is [CommonJS](http://www.commonjs.org/) and [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compatible with no dependencies. You can download the [development](http://github.com/ryanmorr/action-observer/raw/master/dist/ao.js) or [minified](http://github.com/ryanmorr/action-observer/raw/master/dist/ao.min.js) version, or install it in one of the following ways:
-
-``` sh
-npm install ryanmorr/action-observer
-
-bower install ryanmorr/action-observer
-```
-
-You'll want to add the script in the `<head>` of your HTML. This is important because it must be loaded *before* the DOM has started to load and scripts have begun executing so that action events can be captured pre-initialization. You may also want to consider adding the script lnline to avoid the extra HTTP request.
-
-## Tests
-
-Open `test/runner.html` in your browser or test with PhantomJS by issuing the following commands:
-
-``` sh
-npm install
-npm install -g gulp
-gulp test
-```
-
 ## License
 
 This project is dedicated to the public domain as described by the [Unlicense](http://unlicense.org/).
@@ -121,7 +111,5 @@ This project is dedicated to the public domain as described by the [Unlicense](h
 [version-image]: https://badge.fury.io/gh/ryanmorr%2Faction-observer.svg
 [build-url]: https://travis-ci.org/ryanmorr/action-observer
 [build-image]: https://travis-ci.org/ryanmorr/action-observer.svg
-[dependencies-image]: https://david-dm.org/ryanmorr/action-observer.svg
 [license-image]: https://img.shields.io/badge/license-Unlicense-blue.svg
 [license-url]: UNLICENSE
-[file-size-image]: https://badge-size.herokuapp.com/ryanmorr/action-observer/master/dist/ao.min.js.svg?color=blue&label=file%20size
