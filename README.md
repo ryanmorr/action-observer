@@ -65,7 +65,7 @@ Once your primary JavaScript has loaded, you can choose to stop observing specif
 import { unobserve, disable } from '@ryanmorr/action-observer';
 
 // Once the application code has initialized the link, stop observing
-if (isInitialized('link)) {
+if (isInitialized('link')) {
     unobserve('link');
 }
 
